@@ -1,0 +1,11 @@
+# XML parsing
+lxml
+
+# Image processing
+pillow
+cairosvg
+
+# Data handling
+numpy
+pandas
+tqdm
