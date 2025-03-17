@@ -17,8 +17,8 @@ parser.add_argument("--json_path", type=str, default="kanji_dataset.json", help=
 parser.add_argument("--images_dir", type=str, default="", help="Directory containing Kanji images")
 parser.add_argument("--pretrained_model", type=str, default="CompVis/stable-diffusion-v1-4", help="Base Stable Diffusion model")
 parser.add_argument("--output_dir", type=str, default="lora_kanji_unet", help="Directory to save fine-tuned model")
-parser.add_argument("--epochs", type=int, default=2, help="Number of training epochs")  # ✅ Reduced epochs for quick test
-parser.add_argument("--batch_size", type=int, default=4, help="Batch size")  # ✅ Lower batch size for CPU efficiency
+parser.add_argument("--epochs", type=int, default=5, help="Number of training epochs")  # ✅ Reduced epochs for quick test
+parser.add_argument("--batch_size", type=int, default=32, help="Batch size")  # ✅ Lower batch size for CPU efficiency
 parser.add_argument("--lr", type=float, default=5e-4, help="Learning rate")  # ✅ Slightly increased learning rate for faster convergence
 args = parser.parse_args()
 
@@ -27,7 +27,7 @@ class KanjiDataset(Dataset):
     def __init__(self, json_path, images_dir, transform=None):
         with open(json_path, "r", encoding="utf-8") as f:
             self.data = json.load(f)
-        self.kanji_keys = list(self.data.keys())[:100]  # ✅ Only use first 500 images for a quick test
+        self.kanji_keys = list(self.data.keys())[:5000]  # ✅ Only use first 500 images for a quick test
         self.images_dir = images_dir
         self.transform = transform
 
@@ -72,8 +72,8 @@ lora_config = LoraConfig(
     r=8,  # LoRA rank
     lora_alpha=32,  # Scaling factor
     lora_dropout=0.1,  # Dropout for regularization
-    # target_modules=["to_q", "to_v"],  # ✅ Correct targets for Stable Diffusion
-    target_modules=["attn2"],
+    target_modules=["to_q", "to_v"],  # ✅ Correct targets for Stable Diffusion
+    # target_modules=["attn2"],
     bias="none"
 )
 

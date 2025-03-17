@@ -149,8 +149,8 @@ parser.add_argument("--json_path", type=str, default="kanji_dataset.json", help=
 parser.add_argument("--images_dir", type=str, default="", help="Directory containing Kanji images")
 parser.add_argument("--pretrained_model", type=str, default="CompVis/stable-diffusion-v1-4", help="Base Stable Diffusion model")
 parser.add_argument("--output_dir", type=str, default="lora_kanji_unet", help="Directory to save fine-tuned model")
-parser.add_argument("--epochs", type=int, default=5, help="Number of training epochs")
-parser.add_argument("--batch_size", type=int, default=16, help="Batch size")
+parser.add_argument("--epochs", type=int, default=10, help="Number of training epochs")
+parser.add_argument("--batch_size", type=int, default=32, help="Batch size")
 parser.add_argument("--lr", type=float, default=1e-4, help="Learning rate")
 args = parser.parse_args()
 
@@ -189,7 +189,7 @@ transform = transforms.Compose([
 
 # Load dataset
 dataset = KanjiDataset(args.json_path, args.images_dir, transform)
-dataloader = DataLoader(dataset, batch_size=args.batch_size, shuffle=True, num_workers=4)
+dataloader = DataLoader(dataset, batch_size=args.batch_size, shuffle=True, num_workers=12)
 
 # 4️⃣ Load Base Stable Diffusion Model
 print("Loading base model...")
@@ -214,7 +214,8 @@ device = "cuda" if torch.cuda.is_available() else "cpu"
 unet.to(device)
 
 # 6️⃣ Setup Training (Use Accelerate for GPU & Mixed Precision)
-accelerator = Accelerator(mixed_precision="fp16")
+precision = "bf16" if torch.cuda.is_bf16_supported() else "fp16"
+accelerator = Accelerator(mixed_precision=precision)  # ✅ Automatic precision selection
 optimizer = torch.optim.AdamW(unet.parameters(), lr=args.lr)
 unet, optimizer, dataloader = accelerator.prepare(unet, optimizer, dataloader)
 

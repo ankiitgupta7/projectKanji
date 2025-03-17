@@ -16,7 +16,7 @@ parser.add_argument("--seed", type=int, default=42, help="Random seed for reprod
 args = parser.parse_args()
 
 # 2️⃣ Define Test Prompts (Kanji Meanings)
-test_prompts = ["Narendra Modi", "Taj Mahal", "Machine Learning", "Laptop", "Serendipity"]  # ✅ Modify this to test different Kanji
+test_prompts = ["Singularity", "Machine Learning", "Laptop", "Serendipity", "Taj Mahal"]  # ✅ Modify this to test different Kanji
 
 # 3️⃣ Load Base Stable Diffusion Model
 print("Loading base model...")
