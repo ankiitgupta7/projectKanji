@@ -12,7 +12,7 @@ parser.add_argument("--pretrained_model", type=str, default="CompVis/stable-diff
 parser.add_argument("--lora_path", type=str, default="lora_kanji_unet", help="Path to fine-tuned LoRA model")
 parser.add_argument("--output_dir", type=str, default="generated_kanji", help="Directory to save generated Kanji images")
 parser.add_argument("--num_images", type=int, default=5, help="Number of test images to generate")
-parser.add_argument("--seed", type=int, default=42, help="Random seed for reproducibility")
+parser.add_argument("--seed", type=int, default=100, help="Random seed for reproducibility")
 args = parser.parse_args()
 
 # 2️⃣ Define Test Prompts (Kanji Meanings)
