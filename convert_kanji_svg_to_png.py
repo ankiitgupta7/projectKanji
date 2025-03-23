@@ -3,6 +3,7 @@ import cairosvg
 import xml.etree.ElementTree as ET
 from tqdm import tqdm
 
+
 # Paths
 KANJIVG_PATH = "kanjivg.xml"  # Path to the KanjiVG XML dataset
 OUTPUT_FOLDER = "kanji_png_128"  # Output directory for PNG files (128x128)
