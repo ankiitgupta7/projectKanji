@@ -1,0 +1,9 @@
+{
+    "json_path": "kanji_dataset.json",
+    "images_dir": "",
+    "pretrained_model": "CompVis/stable-diffusion-v1-4",
+    "output_dir": "lora_kanji_unet",
+    "epochs": 30,
+    "batch_size": 32,
+    "lr": 0.0001
+}

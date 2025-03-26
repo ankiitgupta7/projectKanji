@@ -1,6 +1,5 @@
 /samples
 /generated*
-/lora*
 /kanji*
 *.csv
 .xml
