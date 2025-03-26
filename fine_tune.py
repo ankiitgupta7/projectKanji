@@ -19,8 +19,8 @@ from diffusers import (
 model_name = "CompVis/stable-diffusion-v1-4"
 json_file = "kanji_dataset.json"
 image_dir = "kanji_png_128"  # Folder containing your 128x128 PNG images
-output_dir = "kanji-model-finetuned"
-num_epochs = 50
+output_dir = "kanji-model-finetuned131"
+num_epochs = 131
 batch_size = 16
 base_learning_rate = 5e-6
 resolution = 128
@@ -170,13 +170,13 @@ for epoch in range(num_epochs):
             feature_extractor=None,
         ).to(device)
         
-        os.makedirs(f"samples/epoch_{epoch+1}", exist_ok=True)
+        os.makedirs(f"samples131/epoch_{epoch+1}", exist_ok=True)
         for prompt in sample_prompts:
             image = temp_pipe(prompt, guidance_scale=7.5, num_inference_steps=50).images[0]
             # Convert to B&W threshold
             image = image.convert("L").point(lambda p: 0 if p < 128 else 255)
             image = image.resize((128, 128))
-            out_path = f"samples/epoch_{epoch+1}/{prompt.replace(' ','_')}.png"
+            out_path = f"samples131/epoch_{epoch+1}/{prompt.replace(' ','_')}.png"
             image.save(out_path)
 
     # Save checkpoint every 10 epochs
